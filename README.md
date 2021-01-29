@@ -12,8 +12,10 @@ CircularProgress
 
 ### CircularProgressIndicator
 
+    ```dart
     CircularProgress(
         percentage: 50.0,
         color: Colors.orange,
         back: Colors.blue,
     );
+    ```

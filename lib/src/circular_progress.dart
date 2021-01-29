@@ -3,16 +3,21 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+/// Main Class
+/// [percentage] from 0 to 100 percentage circle
+/// [showPercentage] show percentage text
+/// [color] percentage line color
+/// [backColor] back circle color
 class CircularProgress extends StatefulWidget {
   final double percentage;
   final Color color;
-  final Color back;
+  final Color backColor;
   final bool showPercentage;
 
   CircularProgress({
     @required this.percentage,
     this.color = Colors.orange,
-    this.back = Colors.black,
+    this.backColor = Colors.black,
     this.showPercentage = true,
   });
 
@@ -62,7 +67,7 @@ class _CircularProgressState extends State<CircularProgress>
                       percentage: (widget.percentage - diferencia) +
                           (diferencia * controller.value),
                       color: widget.color,
-                      back: widget.back),
+                      back: widget.backColor),
                 ),
               ],
             );

@@ -1,7 +1,7 @@
 name: progress_indicator
-description: A new Flutter package project.
-version: 0.0.1
-homepage: https://github.com/rodrileonel
+description: A useful collection of custom progress indicators for flutter.
+version: 0.1.0
+homepage: https://github.com/rodrileonel/progress_indicator
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
