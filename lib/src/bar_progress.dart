@@ -1,9 +1,8 @@
-import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-/// CircularProgress Class
+/// BarProgress Class
 /// [percentage] from 0 to 100 percentage circle
 /// [color] percentage line color
 /// [backColor] back circle color
@@ -12,7 +11,7 @@ import 'package:flutter/material.dart';
 /// [textStyle] text percentage style
 /// [stroke] stroke size
 /// [round] round stroke
-class CircularProgress extends StatefulWidget {
+class BarProgress extends StatefulWidget {
   final double percentage;
   final Color color;
   final Color backColor;
@@ -22,25 +21,25 @@ class CircularProgress extends StatefulWidget {
   final double stroke;
   final bool round;
 
-  CircularProgress({
-    @required this.percentage,
-    this.color = Colors.orange,
-    this.backColor = Colors.black,
-    this.showPercentage = true,
-    this.gradient,
-    TextStyle textStyle,
-    this.stroke = 20,
-    this.round = true,
-  }) : this.textStyle = textStyle ??
+  BarProgress(
+      {@required this.percentage,
+      @required this.color,
+      this.backColor = Colors.transparent,
+      this.showPercentage = true,
+      this.gradient,
+      TextStyle textStyle,
+      this.stroke = 20,
+      this.round = true})
+      : this.textStyle = textStyle ??
             TextStyle(
               color: Colors.black,
             );
 
   @override
-  _CircularProgressState createState() => _CircularProgressState();
+  _BarProgressState createState() => _BarProgressState();
 }
 
-class _CircularProgressState extends State<CircularProgress>
+class _BarProgressState extends State<BarProgress>
     with SingleTickerProviderStateMixin {
   AnimationController controller;
   double oldPercentage;
@@ -64,6 +63,8 @@ class _CircularProgressState extends State<CircularProgress>
     oldPercentage = widget.percentage;
 
     return Container(
+      height: double.minPositive,
+      margin: EdgeInsets.all(10),
       child: AnimatedBuilder(
           animation: controller,
           builder: (BuildContext context, Widget child) {
@@ -76,17 +77,17 @@ class _CircularProgressState extends State<CircularProgress>
               fit: StackFit.expand,
               children: [
                 CustomPaint(
-                  painter: _Circle(
-                      percentage: (widget.percentage - diferencia) +
-                          (diferencia * controller.value),
-                      color: widget.color,
-                      backColor: widget.backColor,
-                      text: (widget.showPercentage)
-                          ? textSpan
-                          : TextSpan(text: ''),
-                      gradient: widget.gradient,
-                      stroke: widget.stroke,
-                      round: widget.round),
+                  painter: _Bar(
+                    percentage: (widget.percentage - diferencia) +
+                        (diferencia * controller.value),
+                    color: widget.color,
+                    back: widget.backColor,
+                    text:
+                        (widget.showPercentage) ? textSpan : TextSpan(text: ''),
+                    gradient: widget.gradient,
+                    stroke: widget.stroke,
+                    round: widget.round,
+                  ),
                 ),
               ],
             );
@@ -101,40 +102,40 @@ class _CircularProgressState extends State<CircularProgress>
   }
 }
 
-class _Circle extends CustomPainter {
+class _Bar extends CustomPainter {
   final double percentage;
   final Color color;
-  final Color backColor;
+  final Color back;
   final TextSpan text;
   final Gradient gradient;
   final double stroke;
   final bool round;
 
-  _Circle(
-      {@required this.percentage,
-      @required this.color,
-      @required this.backColor,
-      this.text,
-      this.gradient,
-      this.stroke,
-      this.round = true});
+  _Bar({
+    @required this.percentage,
+    @required this.color,
+    @required this.back,
+    this.text,
+    this.gradient,
+    this.stroke,
+    this.round = true,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round
       ..strokeWidth = this.stroke
-      ..color = backColor;
+      ..color = back;
 
-    final center = Offset(size.width * 0.5, size.height * 0.5);
-    final radius = min(size.width * 0.5, size.height * 0.5);
-
-    canvas.drawCircle(center, radius, paint);
+    canvas.drawLine(Offset(0, 0), Offset(size.width, 0), paint);
 
     final paintProgress = Paint()
       ..style = PaintingStyle.stroke
       ..strokeCap = round ? StrokeCap.round : StrokeCap.butt
-      ..strokeWidth = this.stroke;
+      ..strokeWidth = this.stroke
+      ..color = color;
 
     if (gradient != null) {
       final Rect rect = Rect.fromCircle(
@@ -145,19 +146,20 @@ class _Circle extends CustomPainter {
     } else
       paintProgress.color = color;
 
-    double arcAngle = 2 * pi * (percentage / 100);
+    canvas.drawLine(
+        Offset(0, 0), Offset(size.width * percentage / 100, 0), paintProgress);
 
-    canvas.drawArc(Rect.fromCircle(center: center, radius: radius), -pi / 2,
-        arcAngle, false, paintProgress);
-
-    final textPainter =
-        TextPainter(text: text, textDirection: TextDirection.ltr)..layout();
-
+    final textPainter = TextPainter(
+      text: text,
+      textDirection: TextDirection.ltr,
+    )..layout();
+    final height =
+        (size.height - textPainter.height) * 0.5 - (size.height) * 0.5;
     textPainter.paint(
       canvas,
       Offset(
         (size.width - textPainter.width) * 0.5,
-        (size.height - textPainter.height) * 0.5,
+        height,
       ),
     );
   }
