@@ -5,6 +5,7 @@ CircularProgress
 ## Features  
   
  - circular progress indicator.
+ - bar progress indicator.
 
 ## Usage
 

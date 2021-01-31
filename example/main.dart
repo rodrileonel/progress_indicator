@@ -13,14 +13,36 @@ class MyApp extends StatelessWidget {
           title: Text('Progress indicator'),
         ),
         body: Center(
-          child: Container(
-            width: 150,
-            height: 150,
-            child: CircularProgress(
-              percentage: 50,
-              color: Colors.amber,
-              backColor: Colors.blueGrey,
-            ),
+          child: Column(
+            children: [
+              Container(
+                width: 150,
+                height: 150,
+                child: CircularProgress(
+                  percentage: 90.0,
+                  color: Colors.amber,
+                  backColor: Colors.grey,
+                  gradient: LinearGradient(colors: [Colors.blue, Colors.red]),
+                  showPercentage: true,
+                  textStyle:TextStyle(color: Colors.orange,fontSize: 20),
+                  stroke: 20,
+                  round: true,
+                ),
+              ),
+              Container(
+                width: 150,
+                height: 150,
+                child: BarProgress(
+                  percentage: 70.0,
+                  backColor: Colors.grey,
+                  gradient: LinearGradient(colors: [Colors.orange, Colors.red]),
+                  showPercentage: true,
+                  textStyle:TextStyle(color: Colors.orange,fontSize: 20),
+                  stroke: 40,
+                  round: false,
+                ),
+              ),
+            ],
           ),
         ),
       ),

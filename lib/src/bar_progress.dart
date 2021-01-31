@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 /// [gradient] show gradient instead of color
 /// [textStyle] text percentage style
 /// [stroke] stroke size
-/// [round] round stroke
 class BarProgress extends StatefulWidget {
   final double percentage;
   final Color color;
@@ -23,7 +22,7 @@ class BarProgress extends StatefulWidget {
 
   BarProgress(
       {@required this.percentage,
-      @required this.color,
+      this.color = Colors.orange,
       this.backColor = Colors.transparent,
       this.showPercentage = true,
       this.gradient,
@@ -125,7 +124,7 @@ class _Bar extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.round
+      ..strokeCap = round ? StrokeCap.round : StrokeCap.butt
       ..strokeWidth = this.stroke
       ..color = back;
 

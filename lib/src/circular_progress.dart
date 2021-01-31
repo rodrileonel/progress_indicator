@@ -25,7 +25,7 @@ class CircularProgress extends StatefulWidget {
   CircularProgress({
     @required this.percentage,
     this.color = Colors.orange,
-    this.backColor = Colors.black,
+    this.backColor = Colors.transparent,
     this.showPercentage = true,
     this.gradient,
     TextStyle textStyle,
@@ -64,6 +64,7 @@ class _CircularProgressState extends State<CircularProgress>
     oldPercentage = widget.percentage;
 
     return Container(
+      padding: EdgeInsets.all(50),
       child: AnimatedBuilder(
           animation: controller,
           builder: (BuildContext context, Widget child) {
@@ -123,7 +124,7 @@ class _Circle extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = this.stroke
+      ..strokeWidth = 10
       ..color = backColor;
 
     final center = Offset(size.width * 0.5, size.height * 0.5);
@@ -134,7 +135,7 @@ class _Circle extends CustomPainter {
     final paintProgress = Paint()
       ..style = PaintingStyle.stroke
       ..strokeCap = round ? StrokeCap.round : StrokeCap.butt
-      ..strokeWidth = this.stroke;
+      ..strokeWidth = 10;
 
     if (gradient != null) {
       final Rect rect = Rect.fromCircle(
