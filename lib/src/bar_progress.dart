@@ -15,18 +15,18 @@ class BarProgress extends StatefulWidget {
   final Color color;
   final Color backColor;
   final bool showPercentage;
-  final Gradient gradient;
+  final Gradient? gradient;
   final TextStyle textStyle;
   final double stroke;
   final bool round;
 
   BarProgress(
-      {@required this.percentage,
+      {required this.percentage,
       this.color = Colors.orange,
       this.backColor = Colors.transparent,
       this.showPercentage = true,
       this.gradient,
-      TextStyle textStyle,
+      TextStyle? textStyle,
       this.stroke = 20,
       this.round = true})
       : this.textStyle = textStyle ??
@@ -40,8 +40,8 @@ class BarProgress extends StatefulWidget {
 
 class _BarProgressState extends State<BarProgress>
     with SingleTickerProviderStateMixin {
-  AnimationController controller;
-  double oldPercentage;
+  late AnimationController controller;
+  late double oldPercentage;
 
   @override
   void initState() {
@@ -66,7 +66,7 @@ class _BarProgressState extends State<BarProgress>
       margin: EdgeInsets.all(10),
       child: AnimatedBuilder(
           animation: controller,
-          builder: (BuildContext context, Widget child) {
+          builder: (BuildContext context, Widget? child) {
             final textSpan = TextSpan(
               text:
                   '${((widget.percentage - diferencia) + (diferencia * controller.value)).toInt()} %',
@@ -105,15 +105,15 @@ class _Bar extends CustomPainter {
   final double percentage;
   final Color color;
   final Color back;
-  final TextSpan text;
-  final Gradient gradient;
-  final double stroke;
+  final TextSpan? text;
+  final Gradient? gradient;
+  final double? stroke;
   final bool round;
 
   _Bar({
-    @required this.percentage,
-    @required this.color,
-    @required this.back,
+    required this.percentage,
+    required this.color,
+    required this.back,
     this.text,
     this.gradient,
     this.stroke,
@@ -125,7 +125,7 @@ class _Bar extends CustomPainter {
     final paint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeCap = round ? StrokeCap.round : StrokeCap.butt
-      ..strokeWidth = this.stroke
+      ..strokeWidth = this.stroke!
       ..color = back;
 
     canvas.drawLine(Offset(0, 0), Offset(size.width, 0), paint);
@@ -133,7 +133,7 @@ class _Bar extends CustomPainter {
     final paintProgress = Paint()
       ..style = PaintingStyle.stroke
       ..strokeCap = round ? StrokeCap.round : StrokeCap.butt
-      ..strokeWidth = this.stroke
+      ..strokeWidth = this.stroke!
       ..color = color;
 
     if (gradient != null) {
@@ -141,7 +141,7 @@ class _Bar extends CustomPainter {
         center: Offset(0, 0),
         radius: 360,
       );
-      paintProgress.shader = gradient.createShader(rect);
+      paintProgress.shader = gradient!.createShader(rect);
     } else
       paintProgress.color = color;
 

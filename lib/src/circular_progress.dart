@@ -17,18 +17,18 @@ class CircularProgress extends StatefulWidget {
   final Color color;
   final Color backColor;
   final bool showPercentage;
-  final Gradient gradient;
+  final Gradient? gradient;
   final TextStyle textStyle;
   final double stroke;
   final bool round;
 
   CircularProgress({
-    @required this.percentage,
+    required this.percentage,
     this.color = Colors.orange,
     this.backColor = Colors.transparent,
     this.showPercentage = true,
     this.gradient,
-    TextStyle textStyle,
+    TextStyle? textStyle,
     this.stroke = 20,
     this.round = true,
   }) : this.textStyle = textStyle ??
@@ -42,8 +42,8 @@ class CircularProgress extends StatefulWidget {
 
 class _CircularProgressState extends State<CircularProgress>
     with SingleTickerProviderStateMixin {
-  AnimationController controller;
-  double oldPercentage;
+  late AnimationController controller;
+  late double oldPercentage;
 
   @override
   void initState() {
@@ -67,7 +67,7 @@ class _CircularProgressState extends State<CircularProgress>
       padding: EdgeInsets.all(50),
       child: AnimatedBuilder(
           animation: controller,
-          builder: (BuildContext context, Widget child) {
+          builder: (BuildContext context, Widget? child) {
             final textSpan = TextSpan(
               text:
                   '${((widget.percentage - diferencia) + (diferencia * controller.value)).toInt()} %',
@@ -106,15 +106,15 @@ class _Circle extends CustomPainter {
   final double percentage;
   final Color color;
   final Color backColor;
-  final TextSpan text;
-  final Gradient gradient;
-  final double stroke;
+  final TextSpan? text;
+  final Gradient? gradient;
+  final double? stroke;
   final bool round;
 
   _Circle(
-      {@required this.percentage,
-      @required this.color,
-      @required this.backColor,
+      {required this.percentage,
+      required this.color,
+      required this.backColor,
       this.text,
       this.gradient,
       this.stroke,
@@ -142,7 +142,7 @@ class _Circle extends CustomPainter {
         center: Offset(0, 0),
         radius: 360,
       );
-      paintProgress.shader = gradient.createShader(rect);
+      paintProgress.shader = gradient!.createShader(rect);
     } else
       paintProgress.color = color;
 

@@ -1,3 +1,7 @@
+## [0.2.0] - Circular and Bar progress with null safety
+
+* NullSafety support
+
 ## [0.1.1] - First Live Release
 
 * BarProgress
