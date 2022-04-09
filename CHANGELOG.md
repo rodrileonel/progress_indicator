@@ -1,3 +1,6 @@
+## [0.2.1] - BarProgress custom margin
+
+* BarProgress custom margin
 ## [0.2.0] - Circular and Bar progress with null safety
 
 * NullSafety support

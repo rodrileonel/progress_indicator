@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 /// BarProgress Class
@@ -10,6 +8,7 @@ import 'package:flutter/material.dart';
 /// [gradient] show gradient instead of color
 /// [textStyle] text percentage style
 /// [stroke] stroke size
+/// [margin] stroke size
 class BarProgress extends StatefulWidget {
   final double percentage;
   final Color color;
@@ -19,6 +18,7 @@ class BarProgress extends StatefulWidget {
   final TextStyle textStyle;
   final double stroke;
   final bool round;
+  final EdgeInsets? margin;
 
   BarProgress(
       {required this.percentage,
@@ -28,7 +28,8 @@ class BarProgress extends StatefulWidget {
       this.gradient,
       TextStyle? textStyle,
       this.stroke = 20,
-      this.round = true})
+      this.round = true,
+      this.margin})
       : this.textStyle = textStyle ??
             TextStyle(
               color: Colors.black,
@@ -63,7 +64,7 @@ class _BarProgressState extends State<BarProgress>
 
     return Container(
       height: double.minPositive,
-      margin: EdgeInsets.all(10),
+      margin: widget.margin,
       child: AnimatedBuilder(
           animation: controller,
           builder: (BuildContext context, Widget? child) {
