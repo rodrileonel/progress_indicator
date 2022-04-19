@@ -133,7 +133,7 @@ class _Bar extends CustomPainter {
 
     final paintProgress = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeCap = round ? StrokeCap.round : StrokeCap.butt
+      ..strokeCap = round && percentage!=0 ? StrokeCap.round : StrokeCap.butt
       ..strokeWidth = this.stroke!
       ..color = color;
 

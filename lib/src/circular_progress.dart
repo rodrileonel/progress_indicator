@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 /// [textStyle] text percentage style
 /// [stroke] stroke size
 /// [round] round stroke
+/// [padding] circle padding
 class CircularProgress extends StatefulWidget {
   final double percentage;
   final Color color;
@@ -20,6 +21,7 @@ class CircularProgress extends StatefulWidget {
   final TextStyle textStyle;
   final double stroke;
   final bool round;
+  final EdgeInsets padding;
 
   CircularProgress({
     required this.percentage,
@@ -28,8 +30,9 @@ class CircularProgress extends StatefulWidget {
     this.showPercentage = true,
     this.gradient,
     TextStyle? textStyle,
-    this.stroke = 20,
+    this.stroke = 10,
     this.round = true,
+    this.padding = const EdgeInsets.all(50)
   }) : this.textStyle = textStyle ??
             TextStyle(
               color: Colors.black,
@@ -123,7 +126,7 @@ class _Circle extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 10
+      ..strokeWidth = stroke!
       ..color = backColor;
 
     final center = Offset(size.width * 0.5, size.height * 0.5);
@@ -134,7 +137,7 @@ class _Circle extends CustomPainter {
     final paintProgress = Paint()
       ..style = PaintingStyle.stroke
       ..strokeCap = round ? StrokeCap.round : StrokeCap.butt
-      ..strokeWidth = 10;
+      ..strokeWidth = stroke!;
 
     if (gradient != null) {
       final Rect rect = Rect.fromCircle(
