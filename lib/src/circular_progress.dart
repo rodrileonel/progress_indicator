@@ -23,17 +23,17 @@ class CircularProgress extends StatefulWidget {
   final bool round;
   final EdgeInsets padding;
 
-  CircularProgress({
-    required this.percentage,
-    this.color = Colors.orange,
-    this.backColor = Colors.transparent,
-    this.showPercentage = true,
-    this.gradient,
-    TextStyle? textStyle,
-    this.stroke = 10,
-    this.round = true,
-    this.padding = const EdgeInsets.all(50)
-  }) : this.textStyle = textStyle ??
+  CircularProgress(
+      {required this.percentage,
+      this.color = Colors.orange,
+      this.backColor = Colors.transparent,
+      this.showPercentage = true,
+      this.gradient,
+      TextStyle? textStyle,
+      this.stroke = 10,
+      this.round = true,
+      this.padding = const EdgeInsets.all(50)})
+      : this.textStyle = textStyle ??
             TextStyle(
               color: Colors.black,
             );
